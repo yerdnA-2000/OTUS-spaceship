@@ -2,11 +2,15 @@
 
 namespace App\Move;
 
+use App\Command\RetryableCommandInterface;
+use App\Command\RetryableCommandTrait;
 use App\Vector\VectorUtil;
 use Exception;
 
-class Move
+class Move implements RetryableCommandInterface
 {
+    use RetryableCommandTrait;
+
     private MovableInterface $movable;
 
     public function __construct(MovableInterface $movable)
