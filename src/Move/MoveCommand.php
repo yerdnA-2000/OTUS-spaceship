@@ -7,7 +7,7 @@ use App\Command\RetryableCommandTrait;
 use App\Vector\VectorUtil;
 use Exception;
 
-class Move implements RetryableCommandInterface
+class MoveCommand implements RetryableCommandInterface
 {
     use RetryableCommandTrait;
 

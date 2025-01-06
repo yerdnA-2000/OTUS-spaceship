@@ -2,14 +2,11 @@
 
 namespace App\Rotate;
 
-use App\Command\RetryableCommandInterface;
-use App\Command\RetryableCommandTrait;
+use App\Command\CommandInterface;
 use Exception;
 
-class Rotate implements RetryableCommandInterface
+class RotateCommand implements CommandInterface
 {
-    use RetryableCommandTrait;
-
     private RotatableInterface $rotatable;
 
     public function __construct(RotatableInterface $rotatable)

@@ -2,12 +2,12 @@
 
 namespace App\Tests\Rotate;
 
-use App\Rotate\Rotate;
+use App\Rotate\RotateCommand;
 use App\Rotate\RotatingObject;
 use Exception;
 use PHPUnit\Framework\TestCase;
 
-class RotateTest extends TestCase
+class RotateCommandTest extends TestCase
 {
     /**
      * Для объекта, повернутого на угол 45гр, с угловой скоростью 90гр, поворот выполняется на угол 135гр от нулевого положения
@@ -19,7 +19,7 @@ class RotateTest extends TestCase
             angularVelocity: 90,
         );
 
-        $rotate = new Rotate($rotatable);
+        $rotate = new RotateCommand($rotatable);
         $rotate->execute();
 
         self::assertEquals(135, $rotatable->getDirection());
@@ -35,7 +35,7 @@ class RotateTest extends TestCase
             angularVelocity: 0,
         );
 
-        $rotate = new Rotate($rotatable);
+        $rotate = new RotateCommand($rotatable);
         $rotate->execute();
 
         self::assertEquals(90, $rotatable->getDirection());
@@ -49,7 +49,7 @@ class RotateTest extends TestCase
         $rotatable = new RotatingObject(
             angularVelocity: 70,
         );
-        $rotate = new Rotate($rotatable);
+        $rotate = new RotateCommand($rotatable);
 
         self::expectException(Exception::class);
         self::expectExceptionMessage('Unable to determine direction.');
@@ -65,7 +65,7 @@ class RotateTest extends TestCase
         $rotatable = new RotatingObject(
             direction: 100,
         );
-        $rotate = new Rotate($rotatable);
+        $rotate = new RotateCommand($rotatable);
 
         self::expectException(Exception::class);
         self::expectExceptionMessage('Unable to determine angular velocity.');
