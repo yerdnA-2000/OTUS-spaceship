@@ -1,35 +1,36 @@
 <?php
 
-namespace App\Tests\Plugin\IoC;
+namespace App\Tests\Plugin;
 
 use App\Command\FuelTankInterface;
 use App\Command\MoveStraightCommand;
 use App\Container\IoC;
 use App\Exception\IoCException;
 use App\Move\MoveCommand;
-use App\Plugin\IoC\MovePlugin;
+use App\Plugin\MovePlugin;
+use App\Tests\TestCase\BaseIoCUsingTestTrait;
 use PHPUnit\Framework\TestCase;
 
 class MovePluginTest extends TestCase
 {
-    private IoC $ioc;
+    use BaseIoCUsingTestTrait;
 
     protected function setUp(): void
     {
-        $this->ioc = new IoC();
-
-        $this->ioc->loadPlugins([new MovePlugin()]);
+        $this->initIoC();
     }
 
     /**
      * @throws IoCException
      */
-    public function testLoadPluginsAndResolve(): void
+    public function testLoadPluginAndResolve(): void
     {
+        (new MovePlugin())->load();
+
         $fuelTank = self::createMock(FuelTankInterface::class);
         $moveCommand = self::createMock(MoveCommand::class);
 
-        $moveCommand = $this->ioc->resolve('moveStraight', $fuelTank, $moveCommand, 15.3);
+        $moveCommand = IoC::resolve('moveStraight', $fuelTank, $moveCommand, 15.3);
         self::assertInstanceOf(MoveStraightCommand::class, $moveCommand);
     }
 }

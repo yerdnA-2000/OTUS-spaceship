@@ -3,52 +3,37 @@
 namespace App\Tests\Container;
 
 use App\Container\IoC;
+use App\Container\DependencyBag;
 use App\Exception\IoCException;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
 class IoCTest extends TestCase
 {
-    private IoC $ioc;
-
-    protected function setUp(): void
-    {
-        $this->ioc = new IoC();
-    }
-
     /**
      * @throws IoCException
      */
-    public function testRegisterAndResolve(): void
+    public function testResolve(): void
     {
-        $this->ioc->register('testService', function() {
-            return new stdClass();
-        });
+        $bindings = new DependencyBag([
+            'testService' => function () {
+                return new stdClass();
+            },
+        ]);
+        IoC::setInstance(new IoC($bindings));
 
-        $service = $this->ioc->resolve('testService');
+        $service = IoC::resolve('testService');
 
         self::assertInstanceOf(stdClass::class, $service);
     }
 
-    public function testUnregister(): void
-    {
-        $this->ioc->register('testService', function() {
-            return new stdClass();
-        });
-
-        $this->ioc->unregister('testService');
-
-        self::expectException(IoCException::class);
-        self::expectExceptionMessage('No binding found for key: testService');
-
-        $this->ioc->resolve('testService');
-    }
-
     public function testResolveThrowsExceptionForUnknownKey(): void
     {
-        self::expectException(IoCException::class);
-        self::expectExceptionMessage('No binding found for key: unknownService');
+        IoC::setInstance(new IoC(new DependencyBag()));
 
-        $this->ioc->resolve('unknownService');
+        self::expectException(IoCException::class);
+        self::expectExceptionMessage('No dependency found for key: unknownService');
+
+        IoC::resolve('unknownService');
     }
 }
