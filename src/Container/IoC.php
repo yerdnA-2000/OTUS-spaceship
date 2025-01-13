@@ -3,51 +3,37 @@
 namespace App\Container;
 
 use App\Exception\IoCException;
-use Closure;
 
 /**
- * IoC (Inversion of Control)
+ * IoC (Inversion of Control). Used as facade.
  */
 class IoC
 {
+    private static IoC $instance;
+    private DependencyBag $dependencyBag;
+
+    public function __construct(DependencyBag $dependencyBag)
+    {
+        $this->dependencyBag = $dependencyBag;
+    }
+
     /**
-     * Хранит ассоциации между ключами и замыканиями для создания объектов.
+     * Устанавливает экземпляр IoC.
      */
-    private array $bindings = [];
+    public static function setInstance(IoC $ioc): void
+    {
+        self::$instance = $ioc;
+    }
 
     /**
      * @throws IoCException
      */
-    public function resolve(string $key, ...$args)
+    public static function resolve(string $key, ...$args): mixed
     {
-        if (!isset($this->bindings[$key])) {
-            throw new IoCException("No binding found for key: {$key}");
+        if (!isset(self::$instance->dependencyBag[$key])) {
+            throw new IoCException("No dependency found for key: {$key}");
         }
 
-        return ($this->bindings[$key])(...$args);
-    }
-
-    /**
-     * Позволяет зарегистрировать зависимость по ключу с помощью замыкания.
-     */
-    public function register(string $key, Closure $resolver): void
-    {
-        $this->bindings[$key] = $resolver;
-    }
-
-    public function unregister(string $key): void
-    {
-        if (isset($this->bindings[$key])) {
-            unset($this->bindings[$key]);
-        }
-    }
-
-    public function loadPlugins(array $plugins): void
-    {
-        foreach ($plugins as $plugin) {
-            if (method_exists($plugin, 'register')) {
-                $plugin->register($this);
-            }
-        }
+        return (self::$instance->dependencyBag[$key])(...$args);
     }
 }
