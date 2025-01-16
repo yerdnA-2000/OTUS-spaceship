@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Command\Queue\CommandQueue;
 use App\Exception\CommandException;
 use App\Move\MoveCommand;
 

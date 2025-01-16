@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Command;
+namespace App\Command\Queue;
 
-use ArrayAccess;
+use App\Command\CommandInterface;
 use ArrayIterator;
-use Countable;
-use IteratorAggregate;
 
-class CommandQueue implements Countable, IteratorAggregate, ArrayAccess
+class CommandQueue implements CommandQueueInterface
 {
     /**
      * @var CommandInterface[]

@@ -2,7 +2,7 @@
 
 namespace App\Tests\Processor;
 
-use App\Command\CommandQueue;
+use App\Command\Queue\CommandQueue;
 use App\Command\RetryableCommandInterface;
 use App\Config\Config;
 use App\Processor\CommandQueueProcessor;
