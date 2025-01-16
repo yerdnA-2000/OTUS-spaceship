@@ -2,16 +2,16 @@
 
 namespace App\ExceptionHandler;
 
-use App\Command\CommandQueue;
+use App\Command\Queue\CommandQueueInterface;
 use App\Command\RetryableCommandInterface;
 use App\Command\RetryCommand;
 use Exception;
 
 class RetryExceptionHandler
 {
-    private CommandQueue $commandQueue;
+    private CommandQueueInterface $commandQueue;
 
-    public function __construct(CommandQueue $commandQueue)
+    public function __construct(CommandQueueInterface $commandQueue)
     {
         $this->commandQueue = $commandQueue;
     }

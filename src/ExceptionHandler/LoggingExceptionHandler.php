@@ -2,15 +2,15 @@
 
 namespace App\ExceptionHandler;
 
-use App\Command\CommandQueue;
 use App\Command\LogExceptionCommand;
+use App\Command\Queue\CommandQueueInterface;
 use Exception;
 
 class LoggingExceptionHandler
 {
-    private CommandQueue $commandQueue;
+    private CommandQueueInterface $commandQueue;
 
-    public function __construct(CommandQueue $commandQueue)
+    public function __construct(CommandQueueInterface $commandQueue)
     {
         $this->commandQueue = $commandQueue;
     }

@@ -3,8 +3,8 @@
 namespace App\Tests\Command;
 
 use App\Command\CommandInterface;
-use App\Command\CommandQueue;
 use App\Command\MacroCommand;
+use App\Command\Queue\CommandQueue;
 use App\Exception\CommandException;
 use Exception;
 use PHPUnit\Framework\TestCase;

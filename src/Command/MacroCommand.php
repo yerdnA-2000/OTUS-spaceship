@@ -2,14 +2,15 @@
 
 namespace App\Command;
 
+use App\Command\Queue\CommandQueueInterface;
 use App\Exception\CommandException;
 use Exception;
 
 class MacroCommand implements CommandInterface
 {
-    private CommandQueue $commandQueue;
+    private CommandQueueInterface $commandQueue;
 
-    public function __construct(CommandQueue $commandQueue)
+    public function __construct(CommandQueueInterface $commandQueue)
     {
         $this->commandQueue = $commandQueue;
     }
