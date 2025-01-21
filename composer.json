@@ -9,6 +9,7 @@
     "phpunit/phpunit": "^9.5"
   },
   "require": {
-    "monolog/monolog": "^3.8"
+    "monolog/monolog": "^3.8",
+    "spatie/async": "^1.6"
   }
 }
