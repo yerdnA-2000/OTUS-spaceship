@@ -3,10 +3,10 @@
 namespace App\Async\Command;
 
 use App\Async\Processor\AsyncCommandQueueProcessor;
-use App\Async\State\HardStopState;
+use App\Async\State\NormalState;
 use App\Command\CommandInterface;
 
-class HardStopCommand implements CommandInterface
+class RunCommand implements CommandInterface
 {
     public function __construct(private readonly AsyncCommandQueueProcessor $processor)
     {
@@ -14,6 +14,6 @@ class HardStopCommand implements CommandInterface
 
     public function execute(): void
     {
-        $this->processor->setState(new HardStopState());
+        $this->processor->setState(new NormalState());
     }
 }
